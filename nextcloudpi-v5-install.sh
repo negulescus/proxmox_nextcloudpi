@@ -85,18 +85,19 @@ $STD apt-get install -y curl
 $STD apt-get install -y sudo
 msg_ok "Installed Dependencies"
 
+msg_ok "Setting Root bash back"
+$STD chsh -s /bin/bash root
+
 msg_info "Installing NextCloudPi (Patience)"
 $STD bash <(curl -fsSL https://raw.githubusercontent.com/nextcloud/nextcloudpi/master/install.sh)
 sed -i "s/3 => 'nextcloudpi.lan',/3 => '0.0.0.0',/g" /var/www/nextcloud/config/config.php
 service apache2 restart
 msg_ok "Installed NextCloudPi"
 
+
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
 if [[ $PASS != $ ]]; then
   msg_info "Customizing Container"
-  msg_info "Setting Root bash back"
-  chsh -s /bin/bash root
-  msg_info "Done"
   chmod -x /etc/update-motd.d/*
   touch ~/.hushlogin
   GETTY_OVERRIDE="/etc/systemd/system/container-getty@1.service.d/override.conf"
