@@ -85,14 +85,15 @@ $STD apt-get install -y curl
 $STD apt-get install -y sudo
 msg_ok "Installed Dependencies"
 
-msg_ok "Setting Root bash back"
-$STD chsh -s /bin/bash root
 
 msg_info "Installing NextCloudPi (Patience)"
 $STD bash <(curl -fsSL https://raw.githubusercontent.com/nextcloud/nextcloudpi/master/install.sh)
 sed -i "s/3 => 'nextcloudpi.lan',/3 => '0.0.0.0',/g" /var/www/nextcloud/config/config.php
 service apache2 restart
 msg_ok "Installed NextCloudPi"
+
+msg_ok "Setting Root bash back"
+$STD chsh -s /bin/bash root
 
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
