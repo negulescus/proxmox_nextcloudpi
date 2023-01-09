@@ -87,6 +87,8 @@ msg_ok "Installed Dependencies"
 
 msg_ok "Rename chsh"
 mv /usr/bin/chsh /usr/bin/_chsh
+touch /usr/bin/chsh
+chmod 777 /usr/bin/chsh
 
 msg_info "Installing NextCloudPi (Patience)"
 $STD bash <(curl -fsSL https://raw.githubusercontent.com/nextcloud/nextcloudpi/master/install.sh)
@@ -95,6 +97,7 @@ service apache2 restart
 msg_ok "Installed NextCloudPi"
 
 msg_ok "Rename chsh back"
+rm /usr/bin/chsh
 mv /usr/bin/_chsh /usr/bin/chsh
 
 
